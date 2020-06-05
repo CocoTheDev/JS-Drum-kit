@@ -49,3 +49,10 @@ kbd {
   letter-spacing: .1rem;
   color: #ffc600;
 }
+
+.record {
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: .1rem;
+  color: #ffffff;
+}

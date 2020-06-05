@@ -45,6 +45,10 @@
       <kbd>L</kbd>
       <span class="sound">tink</span>
     </div>
+    <div data-key="82" class="key" style="background: rgba(255, 0, 0, 0.4);">
+      <kbd>R</kbd>
+      <span class="record">RECORD</span>
+    </div>
   </div>
 
   <audio data-key="81" src="sounds/clap.wav"></audio>
@@ -56,14 +60,20 @@
   <audio data-key="74" src="sounds/snare.wav"></audio>
   <audio data-key="75" src="sounds/tom.wav"></audio>
   <audio data-key="76" src="sounds/tink.wav"></audio>
+  <audio data-key="82" src="sounds/record-start.mp3"></audio>
 
 <script>
 
- function playSound(e) {
+
+
+
+
+
+function playSound(e) {
   const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
   const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
 
-  if (!audio) return; // stop function running
+  if (!audio) return; // stop function running if not a key
   audio.currentTime = 0; // rewind to start
   audio.play();
   key.classList.add('playing');
@@ -73,11 +83,44 @@
 function removeTransition(e) {
   if (e.propertyName !== 'transform') return; // skip if it is not a transform
   this.classList.remove('playing');
+}
+
+
+function recordStarted (e) {
+  isRecording = true;
+  var time = [1,2,3,4,5];
+  var instrument = ['a','b','c','d','e'];
+  var array = [ time, instrument ];
+  console.log('START');
+
+
+
+}
+
+function stopRecording (e) {
+  // Reset Timer
+  isRecording = false;
+  // Call remove transition
+  // Display "Play" button
+  console.log('STOP');
+
+}
+
+function organiser (e) {
+
+  (isRecording === false) ?  recordStarted(e) : stopRecording(e);
+ 
 
 }
 
 
-window.addEventListener('keydown', playSound);
+
+var isRecording = false;
+
+window.addEventListener('keydown', function(e) {
+  (e.keyCode == "82") ? organiser(e) : playSound(e)
+});
+
 const keys = document.querySelectorAll('.key');
 keys.forEach(key => key.addEventListener('transitionend', removeTransition));
 
