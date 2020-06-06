@@ -88,41 +88,63 @@ function removeTransition(e) {
 
 function recordStarted (e) {
   isRecording = true;
-  var time = [1,2,3,4,5];
-  var instrument = ['a','b','c','d','e'];
-  var array = [ time, instrument ];
+
+  var time = 0;
+  var timer = setInterval(function(){ // incrementation of time each milliseconds
+    if (isRecording === false) {
+      clearInterval(timer);
+    }
+    time += 1;
+  }, 1);
+
+  var time_arr = [];
+  var instrument_arr = [];
+  var array = [ instrument_arr, time_arr ];
+
+
+  
+  window.addEventListener('keydown', function(e) {
+    instrument_arr.push(e.keyCode);
+    time_arr.push(time);
+    console.log(instrument_arr);
+    console.log(time_arr);
+    console.log(array);
+  });
+
+
   console.log('START');
-
-
-
 }
 
-function stopRecording (e) {
+
+
+
+
+function stopRecording () {
+  window.removeEventListener('keydown', function(e) {});
   // Reset Timer
   isRecording = false;
   // Call remove transition
+  // Delete last key from array cause it's the stop record button
   // Display "Play" button
   console.log('STOP');
 
 }
 
 function organiser (e) {
-
   (isRecording === false) ?  recordStarted(e) : stopRecording(e);
- 
-
 }
 
 
-
+const keys = document.querySelectorAll('.key');
 var isRecording = false;
 
+keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+
 window.addEventListener('keydown', function(e) {
-  (e.keyCode == "82") ? organiser(e) : playSound(e)
+  (e.keyCode == "82") ? organiser() : playSound(e)
 });
 
-const keys = document.querySelectorAll('.key');
-keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+
 
 
 
