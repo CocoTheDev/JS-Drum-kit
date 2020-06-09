@@ -66,14 +66,12 @@
 
 
 
-var organiserLaunch = function(event) {
-  if (event.keyCode !== 82){ // basics sample
-    animation(event.keyCode);
-    playSound(event.keyCode);
-  }
-  else { // recording
-    animation(event.keyCode);
-    playSound(event.keyCode);
+var organiser = function(event) {
+  animation(event.keyCode);
+  playSound(event.keyCode);
+
+  if (event.keyCode == 82) {
+    (!isRecording) ? startRecording() : stopRecording();
   }
 }
 
@@ -87,20 +85,10 @@ function animation(keycode) {
     key.classList.add("playing");
     setTimeout(function() { key.classList.remove("playing"); }, 100);
   }
-
   else { // recording
-    if (!isRecording) {
-      isRecording = true;
-      key.classList.add("recording");
-      recording();
-    } 
-    else {
-       key.classList.remove("recording");
-       isRecording = false;
-    }
+    (!isRecording) ? key.classList.add("recording") : key.classList.remove("recording");
   }
 }
-
 
 function playSound(keycode) {
   var audio = document.querySelector(`audio[data-key="${keycode}"]`);
@@ -110,11 +98,19 @@ function playSound(keycode) {
 }
 
 
-function recording() {
-  (isRecording) ? false : true;
+function startRecording() {
+  isRecording = true;
+  console.log('start recording');
+
 }
 
-window.addEventListener('keydown', organiserLaunch);
+function stopRecording() {
+
+  isRecording = false;
+  console.log('stop recording');
+}
+
+window.addEventListener('keydown', organiser);
 var isRecording = false;
 
 
