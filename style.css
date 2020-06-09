@@ -77,3 +77,9 @@ kbd {
   box-shadow: 0 0 1rem rgba(56, 197, 0, 0.4);
   background: rgba(56, 197, 0, 0.4);
 }
+
+#play {
+  opacity: 0.25;
+}
+
+

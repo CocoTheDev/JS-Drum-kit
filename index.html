@@ -49,6 +49,10 @@
       <kbd>R</kbd>
       <span class="record">RECORD</span>
     </div>
+    <div id="play" data-key="80" class="key">
+      <kbd>P</kbd>
+      <span class="record">PLAY</span>
+    </div>
   </div>
 
   <audio data-key="81" src="sounds/clap.wav"></audio>
@@ -62,31 +66,35 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
   <audio data-key="82" src="sounds/record-start.mp3"></audio>
 
+
+
 <script>
 
 
 
 var organizer = function(event) {
   var keycode = event.keyCode;
+  // while playing, can we push keys ?
   animation(keycode);
   playSound(keycode);
   console.log('key pushed -> ' + keycode);
 
   if (keycode == 82 && isRecording == false) { // Wants to start recording
-    isRecording = true;
     recordingInitialisation();
   }
 
   else if (keycode == 82 && isRecording == true) { // Wants to stop recording
-    isRecording = false;
     stopRecording();
   }
 
   else if (keycode != 82 && isRecording == true) { // Wants to record keys
     recording(keycode);
   }
-}
 
+  else if (keycode == 80 && isRecording == false) { // Wants to record play
+    playRecords();
+  }
+}
 
 
 function animation(keycode) {
@@ -102,6 +110,7 @@ function animation(keycode) {
   }
 }
 
+
 function playSound(keycode) {
   var audio = document.querySelector(`audio[data-key="${keycode}"]`);
   if (!audio) return;
@@ -111,15 +120,16 @@ function playSound(keycode) {
 
 
 function recordingInitialisation() {
-  console.log('arr init');
+  isRecording = true;
+  console.log('record init');
   instruments.splice(0, instruments.length);
   timing.splice(0, timing.length);
 }
 
+
 function stopRecording() {
+  isRecording = false;
   console.log('stop recording');
-  console.log(instruments);
-  console.log(timing);
 }
 
 
@@ -130,10 +140,29 @@ function recording(keycode) {
 }
 
 
+function playRecords() {
+  if (playing === true) {return} ;
+  playing = true;
+  var now = Date.now();
+  var timingDiff = [];
+  timing.forEach( time => timingDiff.push(time - (timing[0] - 1)) );
+
+  for (let index = 0; index < instruments.length; index++) {
+    setTimeout(() => {
+      console.log(timingDiff[index] + " - " + instruments[index]);
+      playSound(instruments[index]);
+    }, timingDiff[index]);
+    
+  }
+  
+  console.log(timingDiff);
+  console.log(timingDiff);
+  console.log('playing finish');
+  playing = false;
+}
 
 
-
-
+var playing = false;
 var isRecording = false;
 var instruments = [];
 var timing = [];
