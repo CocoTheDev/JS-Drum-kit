@@ -131,6 +131,7 @@ function recordingInitialisation() {
 
 function stopRecording() {
   isRecording = false;
+  document.querySelector(`.play-block[data-key="80"]`).style.opacity = 1;
 }
 
 
@@ -158,7 +159,7 @@ function playRecords() {
       isPlaying = false;
       document.querySelector(`.play-block[data-key="80"]`).classList.remove("playing-song")
       }, timingDiff[timingDiff.length - 1]);
-  }
+    }
   
 }
 
