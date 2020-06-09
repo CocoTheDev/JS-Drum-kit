@@ -49,9 +49,9 @@
       <kbd>R</kbd>
       <span class="record">RECORD</span>
     </div>
-    <div id="play" data-key="80" class="key">
+    <div data-key="80" class="play-block">
       <kbd>P</kbd>
-      <span class="record">PLAY</span>
+      <span class="record-text">PLAY</span>
     </div>
   </div>
 
@@ -74,39 +74,43 @@
 
 var organizer = function(event) {
   var keycode = event.keyCode;
-  // while playing, can we push keys ?
+
   animation(keycode);
   playSound(keycode);
-  console.log('key pushed -> ' + keycode);
 
-  if (keycode == 82 && isRecording == false) { // Wants to start recording
+  if (keycode === 82 && isRecording === false) { // Wants to start recording
     recordingInitialisation();
   }
 
-  else if (keycode == 82 && isRecording == true) { // Wants to stop recording
+  else if (keycode === 82 && isRecording === true) { // Wants to stop recording
     stopRecording();
   }
 
-  else if (keycode != 82 && isRecording == true) { // Wants to record keys
+  else if (keycode !== 82 && isRecording === true) { // Wants to record keys
     recording(keycode);
   }
 
-  else if (keycode == 80 && isRecording == false) { // Wants to record play
+  else if (keycode === 80 && isRecording === false) { // Wants to play
     playRecords();
   }
+
 }
 
 
 function animation(keycode) {
-  var key = document.querySelector(`.key[data-key="${keycode}"]`) || document.querySelector(`.record-block[data-key="${keycode}"]`);
+  var key = document.querySelector(`.key[data-key="${keycode}"]`) || document.querySelector(`.record-block[data-key="${keycode}"]`) || document.querySelector(`.play-block[data-key="${keycode}"]`);
+  console.log(key);
   if (!key) return;
 
-  if (keycode !== 82) { // basics sample
+  if (keycode !== 82 && keycode !== 80) { // basics sample
     key.classList.add("playing");
     setTimeout(function() { key.classList.remove("playing"); }, 100);
   }
-  else { // recording
+  else if (keycode === 82) { // recording
     (!isRecording) ? key.classList.add("recording") : key.classList.remove("recording");
+  }
+  else if (keycode === 80) { // playing song
+    (!isPlaying) ? key.classList.add("playing-song") : key.classList.remove("playing-song");
   }
 }
 
@@ -121,7 +125,6 @@ function playSound(keycode) {
 
 function recordingInitialisation() {
   isRecording = true;
-  console.log('record init');
   instruments.splice(0, instruments.length);
   timing.splice(0, timing.length);
 }
@@ -129,45 +132,43 @@ function recordingInitialisation() {
 
 function stopRecording() {
   isRecording = false;
-  console.log('stop recording');
 }
 
 
 function recording(keycode) {
-  console.log('recording');
   instruments.push(keycode);
   timing.push(Date.now());
 }
 
 
 function playRecords() {
-  if (playing === true) {return} ;
-  playing = true;
-  var now = Date.now();
-  var timingDiff = [];
-  timing.forEach( time => timingDiff.push(time - (timing[0] - 1)) );
+  if (isPlaying === false) {
+    isPlaying = true;
 
-  for (let index = 0; index < instruments.length; index++) {
+    var now = Date.now();
+    var timingDiff = [];
+    timing.forEach( time => timingDiff.push(time - (timing[0] - 1)));
+
+    for (let index = 0; index < instruments.length; index++) {
+      setTimeout(() => {
+        playSound(instruments[index]);
+      }, timingDiff[index]);
+    }
+
     setTimeout(() => {
-      console.log(timingDiff[index] + " - " + instruments[index]);
-      playSound(instruments[index]);
-    }, timingDiff[index]);
-    
+      isPlaying = false;
+      document.querySelector(`.play-block[data-key="80"]`).classList.remove("playing-song")
+      }, timingDiff[timingDiff.length - 1]);
   }
   
-  console.log(timingDiff);
-  console.log(timingDiff);
-  console.log('playing finish');
-  playing = false;
 }
 
 
-var playing = false;
+var isPlaying = false;
 var isRecording = false;
 var instruments = [];
 var timing = [];
 window.addEventListener('keydown', organizer);
-
 
 
 
