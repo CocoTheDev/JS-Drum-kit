@@ -75,18 +75,15 @@ var organizer = function(event) {
   if (keycode == 82 && isRecording == false) { // Wants to start recording
     isRecording = true;
     recordingInitialisation();
-    console.log('start recording');
   }
 
   else if (keycode == 82 && isRecording == true) { // Wants to stop recording
     isRecording = false;
     stopRecording();
-    console.log('stop recording');
   }
 
   else if (keycode != 82 && isRecording == true) { // Wants to record keys
     recording(keycode);
-    console.log('key recorded');
   }
 }
 
@@ -114,20 +111,22 @@ function playSound(keycode) {
 
 
 function recordingInitialisation() {
-  var instruments = [];
-  var timing = [];
-  //var timer = setTimeout
-
-
+  console.log('arr init');
+  instruments.splice(0, instruments.length);
+  timing.splice(0, timing.length);
 }
 
 function stopRecording() {
-
+  console.log('stop recording');
+  console.log(instruments);
+  console.log(timing);
 }
 
 
 function recording(keycode) {
-
+  console.log('recording');
+  instruments.push(keycode);
+  timing.push(Date.now());
 }
 
 
@@ -136,6 +135,8 @@ function recording(keycode) {
 
 
 var isRecording = false;
+var instruments = [];
+var timing = [];
 window.addEventListener('keydown', organizer);
 
 
