@@ -99,7 +99,6 @@ var organizer = function(event) {
 
 function animation(keycode) {
   var key = document.querySelector(`.key[data-key="${keycode}"]`) || document.querySelector(`.record-block[data-key="${keycode}"]`) || document.querySelector(`.play-block[data-key="${keycode}"]`);
-  console.log(key);
   if (!key) return;
 
   if (keycode !== 82 && keycode !== 80) { // basics sample
