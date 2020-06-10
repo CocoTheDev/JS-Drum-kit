@@ -108,8 +108,8 @@ function animation(keycode) {
   else if (keycode === 82) { // recording
     (!isRecording) ? key.classList.add("recording") : key.classList.remove("recording");
   }
-  else if (keycode === 80) { // playing song
-    (!isPlaying) ? key.classList.add("playing-song") : key.classList.remove("playing-song");
+  else if (keycode === 80 && isPlaying === false) { // playing song
+    key.classList.add("playing-song");
   }
 }
 

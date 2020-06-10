@@ -35,11 +35,11 @@ I  don't like  following  tutorial, and  stop  the project right after. I'm alwa
   
   
 ##  Shout out  to :  
+- Brendan  Eich,  founder  of Js  
 - My coding mate @maxxsmo  
 - JavaScript 30 for their  challenge  
 - [https://stackedit.io/](https://stackedit.io/)  for their amazing plateform where I wrote this Readme  
 - [https://www.scribens.com/](https://www.scribens.com/) to help me to improve my english  
-- Brendan  Eich,  founder  of Js  
 - Guys  who  make  Lofi  song on youtube *(my  coding playlist: https://bit.ly/2YfcYOy)*  
 - You,  who are  reading,  hope  you  enjoy  the  app  
   
