@@ -1,5 +1,5 @@
 
-#  Vanilla JavaScript Project  (10h)  
+#  Drum Project - JavaScript (Vanilla) - (10h)  
 ####  GitHub  Page : [https://cocothepimp.github.io/JS-Drum-kit/](https://cocothepimp.github.io/JS-Drum-kit/)  
   
 ##  Goals and  origins  of the  project :  
